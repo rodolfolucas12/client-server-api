@@ -21,7 +21,7 @@ func ConnectDB() (*sql.DB, error) {
 		log.Fatal("Falha ao conectar ao banco de dados: ", err)
 		return nil, err
 	}
-	log.Println("Conectado ao banco de dados")
+
 	createTable(db)
 
 	return db, nil
@@ -57,5 +57,6 @@ func InsertDollarPrice(price string) error {
 		log.Fatal(err)
 		return err
 	}
+
 	return nil
 }

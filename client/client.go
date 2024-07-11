@@ -12,6 +12,7 @@ import (
 )
 
 func BuscarCotacao() {
+	inicio := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Millisecond)
 	defer cancel()
 
@@ -41,10 +42,10 @@ func BuscarCotacao() {
 		return
 	}
 
-	salvarCotacao(cotacao)
+	salvarCotacao(cotacao, inicio)
 }
 
-func salvarCotacao(cotacao model.Cotacao) error {
+func salvarCotacao(cotacao model.Cotacao, inicio time.Time) error {
 	file, err := os.Create("cotacao.txt")
 	if err != nil {
 		log.Fatal("erro ao criar arquivo de cotacao: ", err)
@@ -52,5 +53,7 @@ func salvarCotacao(cotacao model.Cotacao) error {
 	}
 	defer file.Close()
 	file.WriteString("Dólar: " + cotacao.Dolar)
+
+	log.Println("Arquivo de cotacao salvo com sucesso, tempo de execução: ", time.Since(inicio))
 	return nil
 }
